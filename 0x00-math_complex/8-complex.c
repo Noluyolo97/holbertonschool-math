@@ -1,7 +1,7 @@
 /*
 * 8-complex.c - update complex based on modulus and arguments
-* Author: Rodrigo Zárate Algecira
-* Date: August 03, 2021
+* Author: Noluyolo Ndungane
+* Date: March 16, 2022
 */
 
 #include "holberton.h"
