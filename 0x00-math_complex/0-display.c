@@ -1,7 +1,7 @@
 /*
 * 0-display.c
-* Author: Rodrigo Zárate Algecira
-* Date: July 22, 2021
+* Author: Noluyolo Ndungane
+* Date: March 16, 2022
 */
 
 #include "holberton.h"
