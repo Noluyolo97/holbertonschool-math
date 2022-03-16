@@ -1,7 +1,7 @@
 /*
 * 4-addition.c - Addition of complex
-* Author: Rodrigo Zárate Algecira
-* Date: July 30, 2021
+* Author: Nouyolo Ndungane
+* Date: March 16, 2022
 */
 
 #include "holberton.h"
