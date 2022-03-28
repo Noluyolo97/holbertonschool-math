@@ -1,122 +1,58 @@
-/*
-* julia.c - Prints julia set into PGM file
-* Author: Noluyolo Ndungane
-* Date: March 23, 2022
-*/
-
-#include "julia.h"
-
+#include <stdio.h>
+#include <curses.h>
+#include <stdlib.h>
 /**
-* add - add complex
-* @a: complex
-* @b: complex
-* Return: complex
-*/
-
-complex add(complex a, complex b)
+ * main - Function that prints Julia's Set
+ *
+ * Return: End Program
+ */
+int main(void)
 {
-	complex c;
+	int A, B, i, s;
+	double a, b, x, y, t, n = 15, r1, r2;
 
-	c.x = a.x + b.x;
-	c.y = a.y + b.y;
-	return (c);
-}
-
-/**
-* sqr - sqr complex
-* @a: complex
-* Return: complex
-*/
-
-complex sqr(complex a)
-{
-	complex c;
-
-	c.x = a.x * a.x - a.y * a.y;
-	c.y = 2 * a.x * a.y;
-	return (c);
-}
-
-/**
-* modulus - modulus of complex
-* @a: complex
-* Return: complex
-*/
-
-double modulus(complex a)
-{
-	return (sqrt(a.x * a.x + a.y * a.y));
-}
-
-/**
-* drawp - detremine point
-* @width: canva w
-* @height: canva h
-* @radius: distance
-* @x: int
-* @y: int
-* Return: complex
-*/
-
-complex drawp(int width, int height, double radius, int x, int y)
-{
-	complex c;
-	int l = (width < height) ? width : height;
-
-	c.x = 2 * radius * (x - width / 2.0) / l;
-	c.y = 2 * radius * (y - height / 2.0) / l;
-
-	return (c);
-}
-
-/**
-* julia - do the julia
-* Return: void
-* @width: canva w
-* @height: canva h
-* @c: complex
-* @radius: distance factor
-* @n: iterations
-*/
-
-void julia(int width, int height, complex c, double radius, int n)
-{
-int x, y, i;
-complex z0, z1;
-FILE *pgmimg;
-
-printf("Holberton School\n");
-printf("Julia's set image created in julia.pgm file\n\n");
-printf("Test: ./julia 800 800 0 0 1.4 60 for circle\n");
-printf("Test: ./julia 800 800 -0.50 0.55 1.4 60 for tardigrade like\n");
-printf("Test: ./julia 1200 1200 -0.646 0.408 1.3 100 for Unespected beauty\n");
-printf("Test: ./julia 1200 1200 -0.70 0.26 1.3 100 for More beauty\n");
-pgmimg = fopen("julia.pgm", "wb");
-fprintf(pgmimg, "P2 \n");
-fprintf(pgmimg, "%d %d \n", width, height);
-fprintf(pgmimg, "255 \n");
-
-	for (x = 0; x < width; x++)
+	srand(24);
+	while (1)
 	{
-		for (y = 0; y < height; y++)
+		r1 = (4.0 * rand() / RAND_MAX) - 2.0;
+		r2 = (2.0 * rand() / RAND_MAX) - 1.0;
+		s = 0;
+		printf("Julia Set for %f %f\n", r1, r2);
+
+		for (B = 0; B <= 4 * n; B++)
 		{
-		z0 = drawp(width, height, radius, x, y);
-			for (i = 1; i <= n; i++)
+			b = 2 - (B / n);
+			for (A = 0; A <= 4 * n; A++)
 			{
-				z1 = add(sqr(z0), c);
-				if (modulus(z1) > radius)
+				a = -2 + (A / n);
+				x = a;
+				y = b;
+				for (i = 1; i <= 1000; i++)
 				{
-					fprintf(pgmimg, " 16 ");
-					break;
+					t = x;
+					x = ((x * x) - (y * y)) + r1;
+					y = (2 * t * y) + r2;
+					if (((x * x) + (y * y)) > 4)
+						break;
 				}
-				z0 = z1;
+				if (i == 1001)
+				{
+					printf(".");
+					s = s + 1;
+				}
+				else
+					printf(" ");
 			}
-			if (i > n)
-			{
-				fprintf(pgmimg, " 255 ");
-			}
+			printf("\n");
 		}
-	fprintf(pgmimg, "\n");
+		if (s > 10)
+		{
+			/**while (!GetAsyncKeyState(VK_RETURN))
+			{}*/
+			return(0);
+		}
+		system("CLS");
 	}
-fclose(pgmimg);
+	getch();
+	return (0);
 }
